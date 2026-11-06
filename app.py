@@ -9,11 +9,10 @@ st.title("🎓 EduKlusive AI Co-Teacher")
 st.subheader("Powered by the C.L.A.S.S. Prompting Framework™")
 st.markdown("Fill out the C.L.A.S.S. fields below to generate a highly customized, classroom-ready lesson plan or professional document.")
 
-# Sidebar for Configuration
+# Sidebar Branding (No API Key input needed)
 with st.sidebar:
-    st.header("⚙️ Configuration")
-    api_key = st.text_input("Enter your Gemini API Key", type="password")
-    st.markdown("[Get your free Gemini API key here](https://aistudio.google.com/app/apikey)")
+    st.header("⚙️ App Info")
+    st.markdown("This tool utilizes the EduKlusive C.L.A.S.S. Framework to assist educators and professionals.")
     st.markdown("---")
     st.markdown("**EduKlusive Consulting & Services**")
 
@@ -23,7 +22,7 @@ context = st.text_area("What is the current situation, topic, or curriculum stan
 
 st.header("L — Lead Persona")
 persona = st.selectbox("What expert identity should the AI assume?", 
-                      ["Master Educator", "Literacy Specialist", "STEM Master Teacher", "Career Coach"])
+                      ["Low Income Community Teacher / TFN Fellow", "Master Educator", "Literacy Specialist", "STEM Master Teacher", "Career Coach"])
 
 st.header("A — Action & Audience")
 action_audience = st.text_area("What is the exact task, and who will consume it?")
@@ -33,16 +32,16 @@ constraints = st.text_area("What are the strict rules and boundaries?")
 
 st.header("S — Structural Output")
 output_format = st.selectbox("How must the final result be formatted?", 
-                            ["3-Column Table", "Rubric Grid", "Bulleted Guide", "Official Memo"])
+                            ["5-Step Lesson Plan", "3-Column Table", "Rubric Grid", "Bulleted Guide", "Official Memo"])
 
 # Generation Logic
 if st.button("🚀 Generate EduKlusive Plan"):
-    if not api_key:
-        st.error("Please enter your free Gemini API key in the sidebar to continue.")
-    elif not context or not action_audience:
+    if not context or not action_audience:
         st.warning("Please fill out at least the Context and Action fields to generate a plan.")
     else:
         try:
+            # Automatically retrieve API key from Streamlit Secrets
+            api_key = st.secrets["GEMINI_API_KEY"]
             genai.configure(api_key=api_key)
             model = genai.GenerativeModel('gemini-3.8-flash')
             
@@ -64,4 +63,4 @@ if st.button("🚀 Generate EduKlusive Plan"):
             st.markdown(response.text)
             
         except Exception as e:
-            st.error(f"An error occurred: {e}")
+            st.error(f"An error occurred: {e}. Please ensure your GEMINI_API_KEY is configured in Streamlit Cloud Secrets.")
