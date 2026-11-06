@@ -23,7 +23,7 @@ context = st.text_area("What is the current situation, topic, or curriculum stan
 
 st.header("L — Lead Persona")
 persona = st.selectbox("What expert identity should the AI assume?", 
-                       ["Master Educator", "Literacy Specialist", "STEM Master Teacher", "Career Coach"])
+                      ["Master Educator", "Literacy Specialist", "STEM Master Teacher", "Career Coach"])
 
 st.header("A — Action & Audience")
 action_audience = st.text_area("What is the exact task, and who will consume it?")
@@ -33,7 +33,7 @@ constraints = st.text_area("What are the strict rules and boundaries?")
 
 st.header("S — Structural Output")
 output_format = st.selectbox("How must the final result be formatted?", 
-                             ["3-Column Table", "Rubric Grid", "Bulleted Guide", "Official Memo"])
+                            ["3-Column Table", "Rubric Grid", "Bulleted Guide", "Official Memo"])
 
 # Generation Logic
 if st.button("🚀 Generate EduKlusive Plan"):
@@ -44,7 +44,7 @@ if st.button("🚀 Generate EduKlusive Plan"):
     else:
         try:
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-3.8-flash')
+            model = genai.GenerativeModel('gemini-1.5-flash')
             
             master_prompt = f"""
             You are operating under the EduKlusive C.L.A.S.S. Prompting Framework.
